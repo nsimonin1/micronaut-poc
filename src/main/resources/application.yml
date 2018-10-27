@@ -1,0 +1,38 @@
+micronaut:
+    application:
+        name: hello    
+    security:
+      enabled: true
+      endpoints:
+        login:
+          enabled: true
+        oauth:
+          enabled: true
+      token:
+        jwt:
+          enabled: true
+          generator:
+            refresh-token-expiration: 7200
+            access-token-expiration: 3600
+          signatures:
+            secret:
+              generator:
+                secret: MjA4NmU1ZjEtNmFmNy00NGZjLWEzMDgtMGQwZjUzNzg5YjJm
+                jws-algorithm: HS256
+                base64: true
+datasources:
+  default:
+    url: jdbc:mysql://localhost/dbtest
+    username: root 
+    password: admin
+    driverClassName: com.mysql.cj.jdbc.Driver
+jpa:
+    default:
+        properties:
+            hibernate:
+                hbm2ddl:
+                    auto: update
+                show_sql: true
+pem:
+  path: /rsa-2048bit-key-pair.pem                
+    
