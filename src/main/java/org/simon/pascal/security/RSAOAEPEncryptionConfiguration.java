@@ -28,20 +28,21 @@ import io.micronaut.security.token.jwt.encryption.rsa.RSAEncryptionConfiguration
 @Singleton 
 public class RSAOAEPEncryptionConfiguration implements RSAEncryptionConfiguration{
 	private final Logger log=LoggerFactory.getLogger(getClass());
-    private RSAPrivateKey rsaPrivateKey;
-    private RSAPublicKey rsaPublicKey;
+    private final RSAPrivateKey rsaPrivateKey;
+    private final RSAPublicKey rsaPublicKey;
     private final JWEAlgorithm jweAlgorithm = JWEAlgorithm.RSA_OAEP_256;
     private final EncryptionMethod encryptionMethod = EncryptionMethod.A128GCM;
 
+    /**
+     * 
+     * @param pemPath
+     */
     public RSAOAEPEncryptionConfiguration(@Value("${pem.path}") String pemPath) {
     	log.debug("Contructeur de RSA");
     	
         final Optional<KeyPair> keyPair = KeyPairProvider.keyPair(pemPath);
-        if (keyPair.isPresent()) {
-        	log.debug("keyPair est present");
-            rsaPublicKey = (RSAPublicKey) keyPair.get().getPublic();
-            rsaPrivateKey = (RSAPrivateKey) keyPair.get().getPrivate();
-        }
+        rsaPublicKey=keyPair.map(key->(RSAPublicKey) key.getPublic()).orElse(null);
+        rsaPrivateKey=keyPair.map(key->(RSAPrivateKey) key.getPrivate()).orElse(null);
     }
 
     @Override

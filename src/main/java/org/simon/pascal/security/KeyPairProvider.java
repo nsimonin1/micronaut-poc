@@ -28,6 +28,13 @@ public class KeyPairProvider {
 	private static final Logger LOGGER=LoggerFactory.getLogger(KeyPairProvider.class);
 	
 	 /**
+	 * 
+	 */
+	private KeyPairProvider() {
+		
+	}
+
+	/**
     *
     * @param pemPath Full path to PEM file.
     * @return returns KeyPair if successfully for PEM files.
